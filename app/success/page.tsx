@@ -1,15 +1,27 @@
 'use client'
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CheckCircle } from "lucide-react";
 import gsap from "gsap";
-// import {useEmailStore} from "@/store/emailStore";
+import {useEmailStore} from "@/store/userEmailStore";
 
 const ProjectSubmittedSuccess = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const iconRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
-    // const {email}: any = useEmailStore()
+    const [countDown, setCountDown] = useState(20);
+    const {email: userEmail} = useEmailStore();
+    useEffect(() => {
+        const timer = setInterval(() => {
+            if(countDown <= 0) return clearInterval(
+                timer
+            )
+            setCountDown(countDown - 1);
+        }, 1000);
+        return () => clearInterval(timer);
+    }, [countDown])
+
+
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from(iconRef.current, {
@@ -56,7 +68,7 @@ const ProjectSubmittedSuccess = () => {
                     </p>
 
                     <p className="text-gray-700 mb-6">
-                        Please check your <span className="font-semibold">email</span> for:
+                        Please check your <span className="font-semibold">email ({userEmail}) in {countDown} seconds</span> for:
                     </p>
 
                     <ul className="text-left max-w-sm mx-auto space-y-2 mb-6">

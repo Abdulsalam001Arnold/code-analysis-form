@@ -1,8 +1,9 @@
 'use client'
 
 import React, {useState} from "react";
+import Image from "next/image";
 import {useRouter} from "next/navigation";
-// import {useEmailStore} from "@/store/emailStore";
+import {useEmailStore} from "@/store/userEmailStore";
 import {toast, ToastContainer} from "react-toastify";
 const CodeForm = () => {
     const [fullName, setFullName] = useState("");
@@ -12,10 +13,8 @@ const CodeForm = () => {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const {setEmail: setEmailStore} = useEmailStore();
 
-    // const {sendEmail}: any = useEmailStore()
-    
-    // sendEmail(email)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -30,7 +29,8 @@ const CodeForm = () => {
         })
 
         const data = await res.json();
-        if(data) {
+        if(res.ok) {
+            setEmailStore(email)
             toast.success('Form Submitted Successfully!')
             setFullName("")
             setEmail("")
@@ -56,7 +56,7 @@ const CodeForm = () => {
             <ToastContainer/>
             <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img
+                    <Image
                         alt="Your Company"
                         src="/anime-girl-crazy.jpg"
                         className="mx-auto h-30 w-auto"
