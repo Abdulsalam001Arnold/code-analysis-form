@@ -5,6 +5,7 @@ import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {useEmailStore} from "@/store/userEmailStore";
 import {toast, ToastContainer} from "react-toastify";
+import {motion, AnimatePresence} from "framer-motion";
 const CodeForm = () => {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ const CodeForm = () => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const {setEmail: setEmailStore} = useEmailStore();
+
 
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -60,11 +62,18 @@ const CodeForm = () => {
                         alt="Your Company"
                         src="/anime-girl-crazy.jpg"
                         className="mx-auto h-30 w-auto"
+                        width={200}
+                        height={200}
                     />
                     <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">Submit your project here!</h2>
                 </div>
 
-                <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <AnimatePresence>
+                <motion.div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm"
+                initial={{opacity: 0, y: 20}}
+                            animate={{opacity: 1, y: 0}}
+                            transition={{duration: 0.7, ease: "easeInOut",stiffness: 700, delay: 0.25}}
+                >
                     <form method="POST" onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label htmlFor="fullName" className="block text-sm/6 font-medium text-gray-100">
@@ -148,7 +157,8 @@ const CodeForm = () => {
                             </button>
                         </div>
                     </form>
-                </div>
+                </motion.div>
+                </AnimatePresence>
             </div>
         </>
     )

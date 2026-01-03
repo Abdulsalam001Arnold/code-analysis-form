@@ -9,7 +9,7 @@ const ProjectSubmittedSuccess = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const iconRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
-    const [countDown, setCountDown] = useState(20);
+    const [countDown, setCountDown] = useState(40);
     const {email: userEmail} = useEmailStore();
     useEffect(() => {
         const timer = setInterval(() => {
