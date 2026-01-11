@@ -7,16 +7,16 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     try{
-    const n8nweebhook = 'http://localhost:5678/webhook-test/code-analysis'
-    const {fullName, email, link, techSchool} = body;
+    const n8nweebhook = 'http://localhost:5678/webhook-test/cohort-post'
+    const {cohortName, startDate, endDate, course} = body;
 
-    if(fullName !== "" && email !== "" && link !== "") {
+    if(cohortName !== "" && startDate !== "" && endDate !== "" && course !== "") {
         await fetch(n8nweebhook, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({fullName, email, link, techSchool})
+            body: JSON.stringify({cohortName, startDate, endDate, course})
         })
 
         return NextResponse.json({message: "Form submitted successfully!"}, {status: 200})
